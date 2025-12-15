@@ -41,7 +41,7 @@ $User = Config::getObject('core.user.class');
             ) .
             ">[Редактировать]</a>"
         ); ?>
-</td>
+        </td>
     </tr>
     <?php endforeach; ?>
     
