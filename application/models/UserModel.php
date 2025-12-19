@@ -41,12 +41,28 @@ class UserModel extends Model
     
     public $salt = null;
     
+    /**
+     * Проверяет, был ли создан пользователь за последние N секунд
+     */
+    public function hasRecentUser(int $seconds): bool
+    {
+        $seconds = (int)$seconds; // защита
+
+        $sql = "
+            SELECT COUNT(*) 
+            FROM users
+            WHERE timestamp > (NOW() - INTERVAL {$seconds} SECOND)
+        ";
+
+        $st = $this->pdo->query($sql);
+        return (int)$st->fetchColumn() > 0;
+    }
 
     public function insert()
     {
         $sql = "INSERT INTO $this->tableName (timestamp, login, salt, pass, role, email) VALUES (:timestamp, :login, :salt, :pass, :role, :email)"; 
         $st = $this->pdo->prepare ( $sql );
-        $st->bindValue( ":timestamp", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
+        $st->bindValue(":timestamp", date('Y-m-d H:i:s', time()), \PDO::PARAM_STR);
         $st->bindValue( ":login", $this->login, \PDO::PARAM_STR );
         
         //Хеширование пароля
@@ -67,6 +83,7 @@ class UserModel extends Model
     
     public function update()
     {
+        
         // Определяем, обновляем ли пароль
         $updatePassword = !empty($this->pass);
         if ($updatePassword) {
@@ -144,4 +161,5 @@ class UserModel extends Model
     {
         $this->role = $role;
     }
+    
 }

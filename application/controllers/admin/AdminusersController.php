@@ -39,27 +39,48 @@ class AdminusersController extends \ItForFree\SimpleMVC\MVC\Controller
     /**
      * Создание нового пользователя
      */
+
     public function addAction()
     {
+        // compensate time gap - 3 hrs (timezone shift)
+        $CREATE_USER_COOLDOWN_SECONDS = 11100;
+
         $Url = Config::get('core.router.class');
-        if (!empty($_POST)) {
-            if (!empty($_POST['saveNewUser'])) {
-                $Adminusers = new UserModel();
-                $newAdminusers = $Adminusers->loadFromArray($_POST);
-                $newAdminusers->insert(); 
-                $this->redirect($Url::link("admin/adminusers/index"));
-            } 
-            elseif (!empty($_POST['cancel'])) {
-                $this->redirect($Url::link("admin/adminusers/index"));
-            }
-        } else {
-            $addAdminusersTitle = "Регистрация пользователя";
-            $this->view->addVar('addAdminusersTitle', $addAdminusersTitle);
-            
+        $this->view->addVar('addAdminusersTitle', 'Регистрация пользователя');
+
+        if (!empty($_POST['cancel'])) {
+            $this->redirect($Url::link("admin/adminusers/index"));
+            return;
+        }
+
+        if (empty($_POST)) {
             $this->view->render('user/add.php');
+            return;
+        }
+
+        if (!empty($_POST['saveNewUser'])) {
+
+            $Adminusers = new UserModel();
+
+            // ПРОВЕРКА ДО INSERT
+            if ($Adminusers->hasRecentUser($CREATE_USER_COOLDOWN_SECONDS)) {
+
+                $this->view->addVar(
+                    'errorMessage',
+                    'Вы не можете создавать пользователей чаще чем раз в 5 минут'
+                );
+
+                $this->view->render('user/add.php');
+                return; // ← ВАЖНО
+            }
+
+            $newUser = $Adminusers->loadFromArray($_POST);
+            $newUser->insert();
+
+            $this->redirect($Url::link("admin/adminusers/index"));
         }
     }
-    
+
     /**
      * Редактирование пользователя
      */

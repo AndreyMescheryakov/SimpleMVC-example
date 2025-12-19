@@ -22,6 +22,12 @@
         <label for="email">Введите e-mail </label>
         <input type="text" class="form-control"  name="email" id="email" placeholder="адрес электропочты">
     </div>
+    <?php if (!empty($errorMessage)) : ?>
+        <div style="color:red; margin: 10px 0;">
+            <?= htmlspecialchars($errorMessage) ?>
+        </div>
+    <?php endif; ?>
+
     <input type="submit" class="btn btn-primary" name="saveNewUser" value="Сохранить">
     <input type="submit" class="btn" name="cancel" value="Назад">
 </form>
