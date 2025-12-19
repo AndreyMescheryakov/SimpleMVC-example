@@ -126,5 +126,24 @@ class NotesController extends \ItForFree\SimpleMVC\MVC\Controller
         }
     }
     
-    
+    public function getSubcategoriesAction()
+    {
+        $categoryId = $_GET['categoryId'] ?? null;
+        
+        if (!$categoryId) {
+            echo json_encode([]);
+            return;
+        }
+        
+        $subcategoryModel = new \application\models\Subcategory();
+        $sql = "SELECT id, name FROM subcategories WHERE categoryId = :categoryId ORDER BY name";
+        $st = $subcategoryModel->pdo->prepare($sql);
+        $st->bindValue(":categoryId", $categoryId, \PDO::PARAM_INT);
+        $st->execute();
+        $subcategories = $st->fetchAll(\PDO::FETCH_ASSOC);
+        
+        header('Content-Type: application/json');
+        echo json_encode($subcategories);
+    }
+
 }

@@ -18,7 +18,7 @@ class CustomCSSAsset extends SimpleAsset {
     ];
     
     public $needs = [    
-       BootstrapAsset::class         
+       //BootstrapAsset::class         
     ];     
     
 }

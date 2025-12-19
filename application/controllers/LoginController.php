@@ -31,7 +31,7 @@ class LoginController extends \ItForFree\SimpleMVC\MVC\Controller
             $pass = $_POST['password'];
             $User = Config::getObject('core.user.class');
             if($User->login($login, $pass)) {
-                $this->redirect(WebRouter::link("homepage/index"));
+                $this->redirect(WebRouter::link("admin/notes/index"));
             }
             else {
                 $this->redirect(WebRouter::link("login/login&auth=deny"));
@@ -53,5 +53,4 @@ class LoginController extends \ItForFree\SimpleMVC\MVC\Controller
         $this->redirect(WebRouter::link("login/login"));
     }
 }
-
 

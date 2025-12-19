@@ -1,17 +1,16 @@
-<?php use ItForFree\SimpleAsset\SimpleAssetManager; 
+<?php
+use ItForFree\SimpleMVC\Config;
+use ItForFree\SimpleMVC\Router\WebRouter;
 
-SimpleAssetManager::printJS();
+$User = Config::getObject('core.user.class');
 ?>
 
-<div class="footer">
-    <div class="container">
-       <span title="orioginal text:  2017. All rights reserved. I will find you." style="color: #cbc4c4"> 
-            <span class="copyleft">&copy;</span>
-           SimpleMVC -- учебный проект 
-           <a href="http://fkn.ktu10.com/?q=node/7716" class="footer-link" target="__blank">курса backend программирования</a>
-           от ITForFree.   
-       </span>
-    </div>
-   
+<div id="footer">
+    Простая PHP CMS &copy; <?= date('Y') ?>. Все права принадлежат всем. ;)
+    
+    <?php if ($User->isAllowed("login/login")): ?>
+        | <a href="<?= WebRouter::link("login/login") ?>">Site Admin</a>
+    <?php elseif ($User->isAllowed("login/logout")): ?>
+        | <a href="<?= WebRouter::link("login/logout") ?>">Logout (<?= $User->userName ?>)</a>
+    <?php endif; ?>
 </div>
-

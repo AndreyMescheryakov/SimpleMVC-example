@@ -2,28 +2,26 @@
 
 namespace application\controllers;
 
-/**
- * Контроллер для домашней страницы
- */
+use application\models\Note;
+
 class HomepageController extends \ItForFree\SimpleMVC\MVC\Controller
 {
-    /**
-     * @var string Название страницы
-     */
-    public $homepageTitle = "Домашняя страница";
-    
-    /**
-     * @var string Пусть к файлу макета 
-     */
     public string $layoutPath = 'main.php';
-      
-    /**
-     * Выводит на экран страницу "Домашняя страница"
-     */
+
     public function indexAction()
     {
-        $this->view->addVar('homepageTitle', $this->homepageTitle); // передаём переменную по view
+        $articleModel = new Note();
+
+        $articles = $articleModel->getList(10)['results'];
+
+        foreach ($articles as $article) {
+            // Эти свойства должны быть ОБЪЯВЛЕНЫ в модели (см. ниже)
+            $article->categoryName    = $articleModel->getCategoryNameForId($article->categoryId);
+            $article->subcategoryName = $articleModel->getSubcategoryNameForId($article->subcategoryId);
+            $article->authors         = $articleModel->getAuthorsForArticle($article->id);
+        }
+
+        $this->view->addVar('articles', $articles);
         $this->view->render('homepage/index.php');
     }
 }
-

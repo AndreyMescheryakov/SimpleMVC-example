@@ -41,28 +41,12 @@ class UserModel extends Model
     
     public $salt = null;
     
-    /**
-     * Проверяет, был ли создан пользователь за последние N секунд
-     */
-    public function hasRecentUser(int $seconds): bool
-    {
-        $seconds = (int)$seconds; // защита
-
-        $sql = "
-            SELECT COUNT(*) 
-            FROM users
-            WHERE timestamp > (NOW() - INTERVAL {$seconds} SECOND)
-        ";
-
-        $st = $this->pdo->query($sql);
-        return (int)$st->fetchColumn() > 0;
-    }
 
     public function insert()
     {
         $sql = "INSERT INTO $this->tableName (timestamp, login, salt, pass, role, email) VALUES (:timestamp, :login, :salt, :pass, :role, :email)"; 
         $st = $this->pdo->prepare ( $sql );
-        $st->bindValue(":timestamp", date('Y-m-d H:i:s', time()), \PDO::PARAM_STR);
+        $st->bindValue( ":timestamp", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
         $st->bindValue( ":login", $this->login, \PDO::PARAM_STR );
         
         //Хеширование пароля
@@ -70,8 +54,8 @@ class UserModel extends Model
         $st->bindValue( ":salt", $this->salt, \PDO::PARAM_STR );
 //        \DebugPrinter::debug($this->salt);
         
-        $saltedPassword = $this->pass . $this->salt;
-        $hashPass = password_hash($saltedPassword, PASSWORD_BCRYPT);
+        $this->pass .= $this->salt;
+        $hashPass = password_hash($this->pass, PASSWORD_BCRYPT);
 //        \DebugPrinter::debug($hashPass);
         $st->bindValue( ":pass", $hashPass, \PDO::PARAM_STR );
         
@@ -83,29 +67,26 @@ class UserModel extends Model
     
     public function update()
     {
-        
-        // Определяем, обновляем ли пароль
-        $updatePassword = !empty($this->pass);
-        if ($updatePassword) {
-            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, salt=:salt, pass=:pass, role=:role, email=:email  WHERE id = :id";  
-            // Хеширование пароля
-            $this->salt = rand(0,1000000);
-            $saltedPassword = $this->pass . $this->salt;
-            $hashPass = password_hash($saltedPassword, PASSWORD_BCRYPT);
-        } else {
-            // Обновляем без пароля
-            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, role=:role, email=:email WHERE id = :id";
+        if (!empty($this->pass)){
+            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, pass=:pass, role=:role, email=:email  WHERE id = :id";  
+            $st = $this->pdo->prepare ( $sql );
+            $st->bindValue( ":pass", $this->pass, \PDO::PARAM_STR );
+        }
+        else{
+            $sql = "UPDATE $this->tableName SET timestamp=:timestamp, login=:login, role=:role, email=:email  WHERE id = :id";  
+            $st = $this->pdo->prepare ( $sql );
         }
 
-        $st = $this->pdo->prepare ( $sql );
-        
         $st->bindValue( ":timestamp", (new \DateTime('NOW'))->format('Y-m-d H:i:s'), \PDO::PARAM_STMT);
         $st->bindValue( ":login", $this->login, \PDO::PARAM_STR );
         
-        if ($updatePassword){
-            $st->bindValue(":salt", $this->salt, \PDO::PARAM_STR);
-            $st->bindValue(":pass", $hashPass, \PDO::PARAM_STR);
-        }
+        // Хеширование пароля
+        $this->salt = rand(0,1000000);
+        //$st->bindValue( ":salt", $this->salt, \PDO::PARAM_STR );
+        //$this->pass .= $this->salt;
+        //$hashPass = password_hash($this->pass, PASSWORD_BCRYPT);
+        //$st->bindValue( ":pass", $this->pass, \PDO::PARAM_STR );
+        
         $st->bindValue( ":role", $this->role, \PDO::PARAM_STR );
         $st->bindValue( ":email", $this->email, \PDO::PARAM_STR );
         $st->bindValue( ":id", $this->id, \PDO::PARAM_INT );
@@ -154,12 +135,17 @@ class UserModel extends Model
 	return $st->fetch();
     }
 
-    /** 
-     * Изменить роль
-    */
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
-    
+    // Получить статьи пользователя
+public function getArticles()
+{
+    $sql = "SELECT n.* FROM notes n 
+            JOIN article_authors aa ON n.id = aa.article_id 
+            WHERE aa.user_id = :user_id 
+            ORDER BY n.publicationDate DESC";
+    $st = $this->pdo->prepare($sql);
+    $st->bindValue(":user_id", $this->id, \PDO::PARAM_INT);
+    $st->execute();
+    return $st->fetchAll(\PDO::FETCH_OBJ);
+}
+
 }

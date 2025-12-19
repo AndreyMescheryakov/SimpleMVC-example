@@ -37,6 +37,18 @@ $User = Config::getObject('core.user.class');
         </li>
         <?php endif; ?>
         
+        <!--<?php  if ($User->isAllowed("admin/notes/index")): ?>-->
+        <li class="nav-item">
+        <a class="nav-link" href="<?= WebRouter::link("admin/admincategories/index") ?>">Категории</a>
+        </li>
+        <!--<?php endif; ?>-->
+
+        <?php  if ($User->isAllowed("admin/notes/index")): ?>
+        <li class="nav-item">
+        <a class="nav-link" href="<?= WebRouter::link("admin/adminsubcategories/index") ?>">Подкатегории</a>
+        </li>
+        <?php endif; ?>
+
         <?php  if ($User->isAllowed("login/logout")): ?>
         <li class="nav-item ">
             <a class="nav-link" href="<?= WebRouter::link("login/logout") ?>">Выход (<?= $User->userName ?>)</a>
@@ -46,4 +58,3 @@ $User = Config::getObject('core.user.class');
     </ul>
    </div>
 </nav>
-

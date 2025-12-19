@@ -1,0 +1,540 @@
+.
+├── application
+│   ├── assets
+│   │   ├── BootstrapAsset.php
+│   │   ├── CustomCSSAsset.php
+│   │   ├── DemoJavascriptAsset.php
+│   │   ├── JqueryAsset.php
+│   │   └── MyFirstCMSAsset.php
+│   ├── bootstrap.php
+│   ├── config
+│   │   ├── console.php
+│   │   ├── web-local-example.php
+│   │   ├── web-local.php
+│   │   └── web.php
+│   ├── controllers
+│   │   ├── admin
+│   │   │   ├── AdmincategoriesController.php
+│   │   │   ├── AdminsubcategoriesController.php
+│   │   │   ├── AdminusersController.php
+│   │   │   └── NotesController.php
+│   │   ├── AjaxController.php
+│   │   ├── CategoryController.php
+│   │   ├── ErrorController.php
+│   │   ├── HelloController.php
+│   │   ├── HomepageController.php
+│   │   ├── LoginController.php
+│   │   ├── NoteController.php
+│   │   └── SubcategoryController.php
+│   ├── handlers
+│   │   └── UserExceptionHandler.php
+│   ├── models
+│   │   ├── AuthUser.php
+│   │   ├── BaseExampleModel.php
+│   │   ├── Category.php
+│   │   ├── Note.php
+│   │   ├── Subcategory.php
+│   │   └── UserModel.php
+│   └── views
+│       ├── admin
+│       │   ├── categories
+│       │   │   ├── delete.php
+│       │   │   ├── edit.php
+│       │   │   └── index.php
+│       │   └── subcategories
+│       │       ├── delete.php
+│       │       ├── edit.php
+│       │       └── index.php
+│       ├── category
+│       │   ├── list.php
+│       │   └── view.php
+│       ├── error.php
+│       ├── homepage
+│       │   └── index.php
+│       ├── layouts
+│       │   ├── admin-main.php
+│       │   ├── includes
+│       │   │   ├── admin-main
+│       │   │   │   ├── footer.php
+│       │   │   │   ├── head.php
+│       │   │   │   └── nav.php
+│       │   │   └── main
+│       │   │       ├── footer.php
+│       │   │       ├── header.php
+│       │   │       ├── head.php
+│       │   │       └── nav.php
+│       │   └── main.php
+│       ├── login
+│       │   └── index.php
+│       ├── note
+│       │   ├── add.php
+│       │   ├── delete.php
+│       │   ├── edit.php
+│       │   ├── includes
+│       │   │   └── admin-notes-nav.php
+│       │   ├── index.php
+│       │   └── view-item.php
+│       ├── subcategory
+│       │   ├── list-all.php
+│       │   ├── list-by-category.php
+│       │   └── view.php
+│       └── user
+│           ├── add.php
+│           ├── delete.php
+│           ├── edit.php
+│           ├── includes
+│           │   └── admin-users-nav.php
+│           ├── index.php
+│           └── view-item.php
+├── base_autoload.php
+├── composer.json
+├── composer.lock
+├── console_autoload.php
+├── console.php
+├── docker
+│   └── docker-compose.yml
+├── docs
+│   ├── AuthAndAccessControl.md
+│   ├── Config.md
+│   ├── Console.md
+│   ├── Controllers.md
+│   ├── ExeptionsHandling.md
+│   ├── Layouts.md
+│   ├── Models.md
+│   ├── Routing.md
+│   ├── Start.md
+│   ├── Views.md
+│   └── WorkingWithAssets.md
+├── dump
+│   └── basedump.sql
+├── images
+│   ├── like.png
+│   └── logo.jpg
+├── Makefile
+├── project_structure.txt
+├── README.md
+├── uploads
+├── vendor
+│   ├── adbario
+│   │   └── php-dot-notation
+│   │       ├── composer.json
+│   │       ├── composer.lock
+│   │       ├── LICENSE.md
+│   │       └── src
+│   │           ├── Dot.php
+│   │           └── helpers.php
+│   ├── autoload.php
+│   ├── composer
+│   │   ├── autoload_classmap.php
+│   │   ├── autoload_files.php
+│   │   ├── autoload_namespaces.php
+│   │   ├── autoload_psr4.php
+│   │   ├── autoload_real.php
+│   │   ├── autoload_static.php
+│   │   ├── ClassLoader.php
+│   │   ├── installed.json
+│   │   ├── installed.php
+│   │   ├── InstalledVersions.php
+│   │   ├── LICENSE
+│   │   └── platform_check.php
+│   ├── it-for-free
+│   │   ├── array_column
+│   │   │   ├── CHANGELOG.md
+│   │   │   ├── composer.json
+│   │   │   ├── LICENSE
+│   │   │   ├── README.md
+│   │   │   └── src
+│   │   │       └── array_column.php
+│   │   ├── php-simple-assets
+│   │   │   ├── codeception.yml
+│   │   │   ├── composer.json
+│   │   │   ├── README.md
+│   │   │   ├── src
+│   │   │   │   ├── SimpleAssetManager.php
+│   │   │   │   └── SimpleAsset.php
+│   │   │   └── tests
+│   │   │       ├── acceptance.suite.yml
+│   │   │       ├── _data
+│   │   │       │   └── myassets
+│   │   │       │       ├── css
+│   │   │       │       │   └── my.css
+│   │   │       │       ├── test1.js
+│   │   │       │       └── test2222.js
+│   │   │       ├── functional.suite.yml
+│   │   │       ├── _output
+│   │   │       ├── _support
+│   │   │       │   ├── AcceptanceTester.php
+│   │   │       │   ├── FunctionalTester.php
+│   │   │       │   ├── _generated
+│   │   │       │   ├── Helper
+│   │   │       │   │   ├── Acceptance.php
+│   │   │       │   │   ├── Functional.php
+│   │   │       │   │   └── Unit.php
+│   │   │       │   └── UnitTester.php
+│   │   │       ├── unit
+│   │   │       │   └── AssetsLoaderTest.php
+│   │   │       └── unit.suite.yml
+│   │   ├── rusphp
+│   │   │   ├── codeception.yml
+│   │   │   ├── composer.json
+│   │   │   ├── docker-compose.yml
+│   │   │   ├── docs
+│   │   │   │   ├── codeception.md
+│   │   │   │   └── logging.md
+│   │   │   ├── index.php
+│   │   │   ├── README.md
+│   │   │   ├── src
+│   │   │   │   ├── Common
+│   │   │   │   │   ├── Latex
+│   │   │   │   │   │   └── WikiMarkupToLatex.php
+│   │   │   │   │   ├── Map
+│   │   │   │   │   │   ├── MapConfigurator.php
+│   │   │   │   │   │   ├── MapSettings.php
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── Phone
+│   │   │   │   │   │   └── PhoneNumber
+│   │   │   │   │   │       ├── PhoneNumber.php
+│   │   │   │   │   │       ├── README.md
+│   │   │   │   │   │       └── RussianPhoneNumber.php
+│   │   │   │   │   ├── Time
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   ├── RequestsTimeIntervalInterface.php
+│   │   │   │   │   │   ├── RequestsTimeInterval.php
+│   │   │   │   │   │   └── TimePeriod.php
+│   │   │   │   │   └── Ui
+│   │   │   │   │       ├── Breadcrumbs
+│   │   │   │   │       │   ├── BreadcrumbsElement.php
+│   │   │   │   │       │   ├── Breadcrumbs.php
+│   │   │   │   │       │   └── README.md
+│   │   │   │   │       └── Message
+│   │   │   │   │           ├── Message.php
+│   │   │   │   │           └── README.md
+│   │   │   │   ├── Documentaion
+│   │   │   │   │   └── FileCreator
+│   │   │   │   │       └── README.md
+│   │   │   │   ├── DOM
+│   │   │   │   │   └── IffDomElement.php
+│   │   │   │   ├── File
+│   │   │   │   │   ├── Archive
+│   │   │   │   │   │   ├── ArchiveCommon.php
+│   │   │   │   │   │   ├── ArchiveConfig.php
+│   │   │   │   │   │   └── GZ.php
+│   │   │   │   │   ├── Base64
+│   │   │   │   │   │   └── Base64TempFile.php
+│   │   │   │   │   ├── Content.php
+│   │   │   │   │   ├── Directory
+│   │   │   │   │   │   └── Directory.php
+│   │   │   │   │   ├── Header.php
+│   │   │   │   │   ├── Image
+│   │   │   │   │   │   ├── FormatStringParser.php
+│   │   │   │   │   │   ├── ImageResizer.php
+│   │   │   │   │   │   ├── placeholders
+│   │   │   │   │   │   │   └── no-image-icon.png
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── MIME.php
+│   │   │   │   │   ├── Path.php
+│   │   │   │   │   ├── TempFile.php
+│   │   │   │   │   └── Text
+│   │   │   │   │       └── CSV
+│   │   │   │   │           ├── CSVCommon.php
+│   │   │   │   │           └── LineInCellsMerger.php
+│   │   │   │   ├── functions.php
+│   │   │   │   ├── Html
+│   │   │   │   │   ├── Table
+│   │   │   │   │   │   ├── ArrayRebuilderForTwoDemesions.php
+│   │   │   │   │   │   ├── ArrayRebuilder.php
+│   │   │   │   │   │   └── traits
+│   │   │   │   │   │       ├── ArrayRebuilderResultInHtmlTest.php
+│   │   │   │   │   │       └── RowColSpanCounter.php
+│   │   │   │   │   └── Tag.php
+│   │   │   │   ├── Log
+│   │   │   │   │   ├── DebugStyles.php
+│   │   │   │   │   ├── Json
+│   │   │   │   │   │   └── AjaxLogger.php
+│   │   │   │   │   ├── SimpleEchoLog.php
+│   │   │   │   │   ├── SimpleFileLog.php
+│   │   │   │   │   ├── SimpleLog.php
+│   │   │   │   │   └── Time
+│   │   │   │   │       ├── README.md
+│   │   │   │   │       └── Timer.php
+│   │   │   │   ├── Measure
+│   │   │   │   │   └── Information.php
+│   │   │   │   ├── Network
+│   │   │   │   │   ├── Domain
+│   │   │   │   │   │   ├── CookieDomain.php
+│   │   │   │   │   │   ├── Domain.php
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── Http
+│   │   │   │   │   │   └── Request.php
+│   │   │   │   │   ├── SSH
+│   │   │   │   │   │   ├── SFTP
+│   │   │   │   │   │   │   └── SFTPbyPhpseclib.php
+│   │   │   │   │   │   └── SSHConnector.php
+│   │   │   │   │   └── Url
+│   │   │   │   │       ├── SocialNetworkUrl.php
+│   │   │   │   │       └── Url.php
+│   │   │   │   ├── OS
+│   │   │   │   │   └── OSCommon.php
+│   │   │   │   ├── patch
+│   │   │   │   │   └── PHPExcel
+│   │   │   │   │       ├── Cell.php
+│   │   │   │   │       ├── Row.php
+│   │   │   │   │       ├── SheetWrapper.php
+│   │   │   │   │       └── Table.php
+│   │   │   │   ├── PHP
+│   │   │   │   │   ├── ArrayLib
+│   │   │   │   │   │   ├── ArrayElement.php
+│   │   │   │   │   │   ├── ArrCommon.php
+│   │   │   │   │   │   ├── ArrConcat.php
+│   │   │   │   │   │   ├── ArrConvert.php
+│   │   │   │   │   │   ├── ArrElement.php
+│   │   │   │   │   │   ├── ArrFilter.php
+│   │   │   │   │   │   ├── ArrHash.php
+│   │   │   │   │   │   ├── ArrMerger.php
+│   │   │   │   │   │   ├── ArrNestedElement
+│   │   │   │   │   │   │   └── ArrNestedElement.php
+│   │   │   │   │   │   ├── ArrSort.php
+│   │   │   │   │   │   ├── ArrStructure.php
+│   │   │   │   │   │   ├── DotNotation
+│   │   │   │   │   │   │   └── Dot.php
+│   │   │   │   │   │   ├── helpers
+│   │   │   │   │   │   │   ├── ReplaceArrayValue.php
+│   │   │   │   │   │   │   └── UnsetArrayValue.php
+│   │   │   │   │   │   ├── Merger.php
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   ├── Reverce.php
+│   │   │   │   │   │   ├── Slice.php
+│   │   │   │   │   │   └── Structure.php
+│   │   │   │   │   ├── Callback
+│   │   │   │   │   │   ├── Callback.php
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── Comparator
+│   │   │   │   │   │   ├── Compare.php
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   ├── DateTime
+│   │   │   │   │   │   ├── DateTimeDifference.php
+│   │   │   │   │   │   └── DateTimeFormat.php
+│   │   │   │   │   ├── Hash
+│   │   │   │   │   │   └── LengthHash.php
+│   │   │   │   │   ├── Memory
+│   │   │   │   │   │   └── MemoryCounter.php
+│   │   │   │   │   ├── Object
+│   │   │   │   │   │   ├── Exception
+│   │   │   │   │   │   │   ├── CountException.php
+│   │   │   │   │   │   │   └── TypeException.php
+│   │   │   │   │   │   ├── ObjectClass
+│   │   │   │   │   │   │   └── Constructor.php
+│   │   │   │   │   │   └── ObjectFactory.php
+│   │   │   │   │   ├── Regexp
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   ├── RegexpExamples.php
+│   │   │   │   │   │   └── Regexp.php
+│   │   │   │   │   ├── Sapi
+│   │   │   │   │   │   └── Sapi.php
+│   │   │   │   │   ├── Security
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   └── TokenWithTimestamp.php
+│   │   │   │   │   ├── Session
+│   │   │   │   │   │   ├── Helper
+│   │   │   │   │   │   │   ├── Event.php
+│   │   │   │   │   │   │   └── FlashMessage.php
+│   │   │   │   │   │   ├── README.md
+│   │   │   │   │   │   └── Session.php
+│   │   │   │   │   ├── Str
+│   │   │   │   │   │   ├── StrCommon.php
+│   │   │   │   │   │   ├── StrFilter.php
+│   │   │   │   │   │   ├── Str.php
+│   │   │   │   │   │   └── Validator.php
+│   │   │   │   │   └── Time
+│   │   │   │   │       └── Timer.php
+│   │   │   │   ├── Testing
+│   │   │   │   │   ├── Codeception
+│   │   │   │   │   │   ├── Acceptance
+│   │   │   │   │   │   │   └── IFFAcceptanceTester.php
+│   │   │   │   │   │   ├── Helper
+│   │   │   │   │   │   │   ├── IFFAssertHelper.php
+│   │   │   │   │   │   │   ├── IffCodeceptionConsoleLoggerTrait.php
+│   │   │   │   │   │   │   ├── IffConsoleLogger.php
+│   │   │   │   │   │   │   └── IffPhpBrowserAddon.php
+│   │   │   │   │   │   └── README.md
+│   │   │   │   │   └── Tester
+│   │   │   │   │       ├── README.md
+│   │   │   │   │       ├── Tester.php
+│   │   │   │   │       └── TestUser.php
+│   │   │   │   └── Timezone
+│   │   │   │       └── TimezoneFormat.php
+│   │   │   ├── Test.php
+│   │   │   └── tests
+│   │   │       ├── acceptance.suite.yml
+│   │   │       ├── _data
+│   │   │       │   └── images
+│   │   │       │       ├── iff.gif
+│   │   │       │       ├── iff.jpeg
+│   │   │       │       ├── iff.jpg
+│   │   │       │       └── iff.png
+│   │   │       ├── functional.suite.yml
+│   │   │       ├── _output
+│   │   │       ├── _support
+│   │   │       │   ├── AcceptanceTester.php
+│   │   │       │   ├── FunctionalTester.php
+│   │   │       │   ├── _generated
+│   │   │       │   ├── Helper
+│   │   │       │   │   ├── Acceptance.php
+│   │   │       │   │   ├── Functional.php
+│   │   │       │   │   └── Unit.php
+│   │   │       │   └── UnitTester.php
+│   │   │       ├── unit
+│   │   │       │   ├── Base64TempFileTest.php
+│   │   │       │   ├── DateTimeFormatTest.php
+│   │   │       │   ├── FilePathTest.php
+│   │   │       │   ├── PhoneNumberTest.php
+│   │   │       │   ├── PHP
+│   │   │       │   │   ├── Arrays
+│   │   │       │   │   │   └── GetPathForElementWithValueTest.php
+│   │   │       │   │   ├── Object
+│   │   │       │   │   │   └── ObjectFactory
+│   │   │       │   │   │       ├── CreateObjectByConstruct
+│   │   │       │   │   │       │   ├── CreateObjectByConstructTest.php
+│   │   │       │   │   │       │   ├── CreateObjectByConstructWithoutTypeHintingTest.php
+│   │   │       │   │   │       │   └── includes
+│   │   │       │   │   │       │       └── constructonClassForCrObByConstTest.php
+│   │   │       │   │   │       └── SetPublicParamsTest.php
+│   │   │       │   │   └── Time
+│   │   │       │   │       └── TimerTest.php
+│   │   │       │   ├── RequestsTimeIntervalTest.php
+│   │   │       │   ├── StringCommonTest.php
+│   │   │       │   ├── StringFiltersTest.php
+│   │   │       │   ├── StringValidatorTest.php
+│   │   │       │   └── TimePeriodTest.php
+│   │   │       └── unit.suite.yml
+│   │   └── simple-mvc
+│   │       ├── CHANGELOG.md
+│   │       ├── codeception.yml
+│   │       ├── composer.json
+│   │       ├── README.md
+│   │       ├── src
+│   │       │   ├── Application.php
+│   │       │   ├── Config.php
+│   │       │   ├── DebugPrinter.php
+│   │       │   ├── ExceptionHandler.php
+│   │       │   ├── Exceptions
+│   │       │   │   ├── SmvcAccessException.php
+│   │       │   │   ├── SmvcConfigException.php
+│   │       │   │   ├── SmvcCoreException.php
+│   │       │   │   ├── SmvcException.php
+│   │       │   │   ├── SmvcRoutingException.php
+│   │       │   │   └── SmvcUsageException.php
+│   │       │   ├── FileUploader.php
+│   │       │   ├── Interfaces
+│   │       │   │   ├── ExceptionHandlerInterface.php
+│   │       │   │   └── RouterInterface.php
+│   │       │   ├── MVC
+│   │       │   │   ├── Controller.php
+│   │       │   │   ├── Model.php
+│   │       │   │   └── View.php
+│   │       │   ├── Router
+│   │       │   │   ├── ConsoleRouter.php
+│   │       │   │   ├── Router.php
+│   │       │   │   └── WebRouter.php
+│   │       │   ├── Session.php
+│   │       │   ├── Traits
+│   │       │   │   └── AccessControl.php
+│   │       │   └── User.php
+│   │       └── tests
+│   │           ├── acceptance.suite.yml
+│   │           ├── _data
+│   │           │   ├── console
+│   │           │   │   └── console-config.php
+│   │           │   ├── container
+│   │           │   │   ├── dependecy-recurcively-creation-config.php
+│   │           │   │   └── test-cache-config.php
+│   │           │   ├── user
+│   │           │   │   └── user-session-config.php
+│   │           │   └── web
+│   │           │       └── web-config.php
+│   │           ├── functional.suite.yml
+│   │           ├── _output
+│   │           ├── _support
+│   │           │   ├── AcceptanceTester.php
+│   │           │   ├── FunctionalTester.php
+│   │           │   ├── _generated
+│   │           │   ├── Helper
+│   │           │   │   ├── Acceptance.php
+│   │           │   │   ├── Functional.php
+│   │           │   │   └── Unit.php
+│   │           │   └── UnitTester.php
+│   │           ├── unit
+│   │           │   ├── Application
+│   │           │   │   ├── ContainerTest.php
+│   │           │   │   └── support
+│   │           │   │       ├── containerDependecyRecurcivelyCreation
+│   │           │   │       │   ├── First.php
+│   │           │   │       │   ├── Second.php
+│   │           │   │       │   └── Third.php
+│   │           │   │       ├── containerElementsCaching
+│   │           │   │       │   └── OneClassCache.php
+│   │           │   │       └── ExampleUser.php
+│   │           │   ├── ConsoleRouter
+│   │           │   │   ├── ConsoleRouterTest.php
+│   │           │   │   └── support
+│   │           │   │       └── ConsoleController.php
+│   │           │   ├── User
+│   │           │   │   ├── support
+│   │           │   │   │   ├── ExampleUser.php
+│   │           │   │   │   └── Session.php
+│   │           │   │   └── UserTest.php
+│   │           │   └── WebRouter
+│   │           │       ├── support
+│   │           │       │   ├── ExampleUser.php
+│   │           │       │   └── WebController.php
+│   │           │       └── WebRouterTest.php
+│   │           └── unit.suite.yml
+│   └── xantios
+│       └── mimey
+│           ├── bin
+│           │   └── generate.php
+│           ├── composer.json
+│           ├── license
+│           ├── mime.types
+│           ├── mime.types.custom
+│           ├── mime.types.php
+│           ├── phpunit.xml
+│           ├── readme.md
+│           ├── src
+│           │   ├── MimeMappingBuilder.php
+│           │   ├── MimeMappingGenerator.php
+│           │   ├── MimeTypesInterface.php
+│           │   └── MimeTypes.php
+│           └── tests
+│               ├── bootstrap.php
+│               └── src
+│                   ├── MimeMappingBuilderTest.php
+│                   ├── MimeMappingGeneratorTest.php
+│                   └── MimeTypesTest.php
+└── web
+    ├── assets
+    ├── CSS
+    │   ├── bootstrap
+    │   │   ├── bootstrap.js
+    │   │   ├── bootstrap.min.css
+    │   │   └── popper.js
+    │   ├── my-first-cms-style.css
+    │   └── style.css
+    ├── images
+    │   ├── like.png
+    │   └── logo.jpg
+    ├── index.php
+    ├── JS
+    │   ├── jquery-3.2.1.js
+    │   ├── jquery.validate.js
+    │   ├── myjs
+    │   │   ├── basejs.js
+    │   │   ├── css
+    │   │   │   ├── basecss.css
+    │   │   │   └── my.css
+    │   │   ├── test1.js
+    │   │   └── test2222.js
+    │   └── NewMyJS.js
+    └── web_autoload.php
+
+169 directories, 368 files

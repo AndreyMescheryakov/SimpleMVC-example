@@ -36,6 +36,10 @@ $User = Config::getObject('core.user.class');
             <a class="nav-link" href="<?= WebRouter::link("admin/notes/index") ?>"> Заметки </a>
         </li>
         <?php endif; ?>
+
+        <li class="nav-item ">
+            <a class="nav-link" href="<?= WebRouter::link('category/list') ?>">Категории</a>
+        </li>
         
         <?php  if ($User->isAllowed("login/logout")): ?>
         <li class="nav-item ">
@@ -45,4 +49,3 @@ $User = Config::getObject('core.user.class');
     </ul>
    </div>
 </nav>
-
